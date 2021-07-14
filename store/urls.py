@@ -1,8 +1,8 @@
 from django.urls import path
-from .views import home, single_music
+from .views import *
 
 
 urlpatterns = [
-    path("", home),
-    path("1/", single_music),
+    path("", home, name="bosh-sahifa"),
+    path("one/", single, name="single-sahifa"),
 ]
