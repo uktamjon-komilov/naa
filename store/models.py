@@ -1,17 +1,40 @@
 from django.db import models
 
 
-class Book(models.Model):
-    title = models.CharField(max_length=255)
-    rating = models.FloatField()
+class User(models.Model):
+    firstname = models.CharField(max_length=255)
+    lastname = models.CharField(max_length=255)
+    email = models.CharField(max_length=255)
+    phone_number = models.CharField(max_length=20, null=True)
+    password = models.CharField(max_length=255)
+    is_admin = models.BooleanField(default=False)
+    is_staff = models.BooleanField(default=True)
+    is_superuser = models.BooleanField(default=False)
+
+
+class Category(models.Model):
+    class Meta:
+        verbose_name = "Kategoriya"
+        verbose_name_plural = "Kategoriyalar"
+
+
+    name = models.CharField(verbose_name="Nomi", max_length=255)
+    icon = models.ImageField(upload_to="images/", null=True)
+    
+    created_at = models.DateTimeField(verbose_name="Yaratilgan sana", auto_now_add=True)
+    updated_at = models.DateTimeField(verbose_name="O'zgartirilgan sana", auto_now=True)
+
+    def __str__(self):
+        return self.name
+
+
+class Product(models.Model):
+    name = models.CharField(max_length=255)
+    price = models.FloatField()
     stock = models.IntegerField()
-    price = models.FloatField(default=1000.0)
-    date = models.DateField()
+    product_description = models.TextField()
+    rating = models.FloatField()
+    category = models.ForeignKey(Category, on_delete=models.CASCADE, null=True)
 
-
-
-# User -> id, first_name, last_name, email, phone, password, is_active, is_admin, is_staff, is_superuser
-
-# Product -> id, name, price, stock, description, rating, coupon, created_at, updated_at
-
-# Category -> id, name, created_at, updated_at
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
