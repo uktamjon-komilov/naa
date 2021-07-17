@@ -34,6 +34,7 @@ class Product(models.Model):
     stock = models.IntegerField()
     product_description = models.TextField()
     rating = models.FloatField()
+    image = models.ImageField(upload_to="images/", null=True)
     category = models.ForeignKey(Category, on_delete=models.CASCADE, null=True)
 
     created_at = models.DateTimeField(auto_now_add=True)
