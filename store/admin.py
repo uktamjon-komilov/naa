@@ -1,16 +1,25 @@
 from django.contrib import admin
-from .models import Category, Product
 
-
-class CategoryAdmin(admin.ModelAdmin):
-    list_display = ["name", "created_at", "updated_at"]
-    list_display_links = ["name", "created_at", "updated_at"]
+from .models import *
 
 
 class ProductAdmin(admin.ModelAdmin):
-    list_display = ["name", "category", "price"]
-    search_fields = ["name", "product_description"]
+    list_display = ["title", "price", "rating", "sub_category", "is_active"]
+    list_display_links = ["title"]
+    search_fields = ["title", "description"]
+    prepopulated_fields = {"slug": ("title",)}
+
+
+
+class CategoryAdmin(admin.ModelAdmin):
+    prepopulated_fields = {"slug": ("name",)}
+
+
+class SubCategoryAdmin(admin.ModelAdmin):
+    prepopulated_fields = {"slug": ("name",)}
+
 
 
 admin.site.register(Category, CategoryAdmin)
+admin.site.register(SubCategory, SubCategoryAdmin)
 admin.site.register(Product, ProductAdmin)
