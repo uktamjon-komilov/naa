@@ -1,0 +1,102 @@
+[
+  {
+    "model": "store.category",
+    "pk": 1,
+    "fields": {
+      "name": "Elektronika",
+      "icon": "images/download.png",
+      "slug": "elektronika"
+    }
+  },
+  {
+    "model": "store.category",
+    "pk": 2,
+    "fields": {
+      "name": "Kiyim-kechak",
+      "icon": "images/download_1.png",
+      "slug": "kiyim-kechak"
+    }
+  },
+  {
+    "model": "store.subcategory",
+    "pk": 1,
+    "fields": { "name": "Quloqchinlar", "category": 1, "slug": "quloqchinlar" }
+  },
+  {
+    "model": "store.subcategory",
+    "pk": 2,
+    "fields": {
+      "name": "Video & Musiqa",
+      "category": 1,
+      "slug": "video-musiqa"
+    }
+  },
+  {
+    "model": "store.subcategory",
+    "pk": 3,
+    "fields": { "name": "Oyoq-kiyim", "category": 2, "slug": "oyoq-kiyim" }
+  },
+  {
+    "model": "store.subcategory",
+    "pk": 4,
+    "fields": { "name": "Sharf", "category": 2, "slug": "sharf" }
+  },
+  {
+    "model": "store.subcategory",
+    "pk": 5,
+    "fields": { "name": "Telefonlar", "category": 1, "slug": "telefonlar" }
+  },
+  {
+    "model": "store.subcategory",
+    "pk": 6,
+    "fields": { "name": "Oilaviy", "category": 1, "slug": "oilaviy" }
+  },
+  {
+    "model": "store.product",
+    "pk": 1,
+    "fields": {
+      "title": "Xiaomi Mi 11X Pro 8/128GB Cosmic Black",
+      "price": 6218000.0,
+      "slug": "xiaomi-mi-11x-pro-8128gb-cosmic-black",
+      "description": "Kafolat muddati (oy): 12\r\n\r\nOperatsion sistema versiyasi: Android 11, MIUI 12\r\n\r\nDoimiy xotira hajmi: 128GB\r\n\r\nSiz Xiaomi Mi 11X Pro 8/128GB sotib olish uchun nafaqat Toshkent, balki Andijon, Buxoro, Farg'ona, Jizzax, Xorazm, Namangan, Navoiy, Qashqadaryo, Qoraqalpog'iston Respublikasi, Samarqand, Sirdaryo, Surxondaryo, Toshkent viloyatidan buyurtma berishingiz mumkin. Siz :brend muddatli to'lovga sotib olishingiz mumkin. Xiaomi Mi 11X Pro 8/128GB kreditga olib nima qilasiz, bo'lib to'lashga olish osonroq va tezroq bo'lsa? O'zbekiston bo'ylab juda tez yetkazib beramiz.",
+      "rating": 3.4,
+      "image": "images/e4H4B5fHhEa8rXmkGOfVIjqIJAaeCTSLJCMhyzvZ0bdlcwjls0vg2PR9RZuq.jpeg",
+      "sub_category": 5,
+      "is_active": true,
+      "created_at": "2021-07-20T16:46:31.755Z",
+      "updated_at": "2021-07-20T17:18:21.404Z"
+    }
+  },
+  {
+    "model": "store.product",
+    "pk": 2,
+    "fields": {
+      "title": "Mikrofon Redragon Blazar GM300",
+      "price": 622000.0,
+      "slug": "mikrofon-redragon-blazar-gm300",
+      "description": "Kafolat muddati (oy): 1\r\n\r\nChastota (Hz): 20–20000 Gts\r\n\r\nTripod va pop-filtr bilan jihozlangan kuchli mikrofon YouTube, Twitch va boshqa platformalarda videolarni oqimlash va yozib olish uchun juda mos keladi. Yengil ixcham dizayn, oson ulanish.\r\nSiz Mikrofon Redragon Blazar GM300 sotib olish uchun nafaqat Toshkent, balki Andijon, Buxoro, Farg'ona, Jizzax, Xorazm, Namangan, Navoiy, Qashqadaryo, Qoraqalpog'iston Respublikasi, Samarqand, Sirdaryo, Surxondaryo, Toshkent viloyatidan buyurtma berishingiz mumkin. Siz :brend muddatli to'lovga sotib olishingiz mumkin. Mikrofon Redragon Blazar GM300 kreditga olib nima qilasiz, bo'lib to'lashga olish osonroq va tezroq bo'lsa? O'zbekiston bo'ylab juda tez yetkazib beramiz.",
+      "rating": 2.5,
+      "image": "images/kCk2WINq5GHD2JRcn8hznetv0O4UZlaFEuxvmNHmXHGuc2gJOkax1cHktQHW.jpeg",
+      "sub_category": 2,
+      "is_active": true,
+      "created_at": "2021-07-20T16:47:49.535Z",
+      "updated_at": "2021-07-20T17:18:15.189Z"
+    }
+  },
+  {
+    "model": "store.product",
+    "pk": 3,
+    "fields": {
+      "title": "Konditsioner Technobox U-FROST 60",
+      "price": 17688000.0,
+      "slug": "konditsioner-technobox-u-frost-60",
+      "description": "Kafolat muddati (oy): 12\r\n\r\nInvertor (uzluksiz quvvat nazorati): Mavjud emas\r\n\r\nSiz Konditsioner Technobox U-FROST 60 sotib olish uchun nafaqat Toshkent, balki Andijon, Buxoro, Farg'ona, Jizzax, Xorazm, Namangan, Navoiy, Qashqadaryo, Qoraqalpog'iston Respublikasi, Samarqand, Sirdaryo, Surxondaryo, Toshkent viloyatidan buyurtma berishingiz mumkin. Siz :brend muddatli to'lovga sotib olishingiz mumkin. Konditsioner Technobox U-FROST 60 kreditga olib nima qilasiz, bo'lib to'lashga olish osonroq va tezroq bo'lsa? O'zbekiston bo'ylab juda tez yetkazib beramiz.",
+      "rating": 3.6,
+      "image": "images/v9CTHLyCZbgNXoe4UfSALfv3FzhemLeWdY0rYqIDW473ZonLalUekipVJEik.jpeg",
+      "sub_category": 6,
+      "is_active": true,
+      "created_at": "2021-07-20T17:14:54.192Z",
+      "updated_at": "2021-07-20T17:14:54.192Z"
+    }
+  }
+]
