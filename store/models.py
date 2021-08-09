@@ -64,12 +64,22 @@ class Product(models.Model):
 
 class ProductColor(models.Model):
     name = models.CharField(max_length=255)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name="product_colors", null=True)
 
 
 class ProductSize(models.Model):
     name = models.CharField(max_length=255)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name="product_size", null=True)
 
 
 class ProductImage(models.Model):
-    image = models.ImageField(upload_to="images/")
-    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    image = models.ImageField(upload_to="images/", )
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name="product_images")
+
+
+
+# for product in products:
+#     product.title
+#     product.description
+#     for image in product.product_images:
+#         print(image)

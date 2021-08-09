@@ -1,6 +1,27 @@
 from django.contrib import admin
 
+# import admin_thumbnails
+
 from .models import *
+
+
+class ProductImageStackedAdmin(admin.StackedInline):
+    model = ProductImage
+    fields = ["image"]
+    extra = 1
+
+
+class ProductColorStackedAdmin(admin.StackedInline):
+    model = ProductColor
+    fields = ["name"]
+    extra = 1
+
+
+class ProductSizeStackedAdmin(admin.StackedInline):
+    model = ProductSize
+    fields = ["name"]
+    extra = 1
+
 
 
 class ProductAdmin(admin.ModelAdmin):
@@ -8,6 +29,8 @@ class ProductAdmin(admin.ModelAdmin):
     list_display_links = ["title"]
     search_fields = ["title", "description"]
     prepopulated_fields = {"slug": ("title",)}
+
+    inlines = [ProductImageStackedAdmin, ProductColorStackedAdmin, ProductSizeStackedAdmin]
 
 
 
@@ -19,7 +42,15 @@ class SubCategoryAdmin(admin.ModelAdmin):
     prepopulated_fields = {"slug": ("name",)}
 
 
+# @admin.register(ProductImage)
+# @admin_thumbnails.thumbnail("image")
+# class ProductImageAdmin(admin.ModelAdmin):
+#     list_display = ["image"]
+
+
 
 admin.site.register(Category, CategoryAdmin)
 admin.site.register(SubCategory, SubCategoryAdmin)
 admin.site.register(Product, ProductAdmin)
+
+# admin.site.register(ProductImageAdmin)

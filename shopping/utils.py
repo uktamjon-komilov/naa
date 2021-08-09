@@ -1,4 +1,4 @@
-from .models import Cart
+from .models import Cart, CartItem
 
 def get_cart(request):
     session_id = request.session.session_key
