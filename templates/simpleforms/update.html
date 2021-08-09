@@ -5,29 +5,21 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Add News</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
 </head>
 <body>
-    <form action="" method="post">
-        {% csrf_token %}
-        <input type="text" name="title" value="{{news.title}}">
-        <br>
-
-        <textarea cols="30" rows="10" name="content">{{news.content}}</textarea>
-        <br>
-
-        <select name="category_id">
-            <option value="">Choose category</option>
-            {% for category in categories %}
-                {% if news.category == category %}
-                    <option value="{{category.id}}" selected>{{category.name}}</option>
-                {% else %}
-                    <option value="{{category.id}}">{{category.name}}</option>
-                {% endif %}
-            {% endfor %}
-        </select>
-        <br>
-
-        <input type="submit" value="Save">
-    </form>
+    <div class="container">
+        <div class="row">
+            <div class="col-6 offset-3">
+                <form action="" method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    
+                    {{form.as_p}}
+            
+                    <input type="submit" value="Save">
+                </form>
+            </div>
+        </div>
+    </div>
 </body>
 </html>

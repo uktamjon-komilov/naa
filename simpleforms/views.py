@@ -2,6 +2,7 @@ from django.shortcuts import redirect, render
 from django.urls import reverse
 
 from .models import Category, News
+from .forms import NewsForm
 
 
 def index(request):
@@ -13,24 +14,18 @@ def index(request):
 
 
 def create(request):
+    form = NewsForm()
+
     if request.method == "POST":
-        title = request.POST.get("title", None)
-        content = request.POST.get("content", None)
-        category_id = request.POST.get("category_id", None)
+        form = NewsForm(request.POST, request.FILES)
+        if form.is_valid():
+            news = form.save(commit=False)
+            news.save()
+            return redirect(reverse("news-list"))
 
-        category = Category.objects.get(id=category_id)
 
-        n = News()
-        n.title = title
-        n.content = content
-        n.category = category
-        n.save()
-
-        return redirect(reverse("news-list"))
-
-    categories = Category.objects.all()
     context = {
-        "categories": categories
+        "form": form
     }
     return render(request, "simpleforms/create.html", context)
 
@@ -41,27 +36,17 @@ def update(request, pk):
         return redirect(reverse("news-list"))
     else:
         news = news.first()
+    
+    form = NewsForm(instance=news)
 
+    if request.method == "POST":
+        news = NewsForm(request.POST, request.FILES, instance=news)
+        if news.is_valid():
+            news.save()
+            return redirect(reverse("news-list"))
 
-    if request.POST:
-        title = request.POST.get("title", None)
-        content = request.POST.get("content", None)
-        category_id = request.POST.get("category_id", None)
-
-        category = Category.objects.get(id=category_id)
-
-        news.title = title
-        news.content = content
-        news.category = category
-        news.save()
-
-        return redirect(reverse("news-list"))
-
-
-    categories = Category.objects.all()
     context = {
-        "categories": categories,
-        "news": news
+        "form": form
     }
     return render(request, "simpleforms/update.html", context)
 
@@ -74,3 +59,13 @@ def delete(request, pk):
         pass
 
     return redirect(reverse("news-list"))
+
+
+
+def category_example_form(request):
+    form = NewsForm()
+    context = {
+        "form": form
+    }
+    return render(request, "simpleforms/example.html", context)
+
