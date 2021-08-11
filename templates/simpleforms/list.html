@@ -19,27 +19,23 @@
         <thead>
             <tr>
                 <td>ID</td>
-                <td>Title</td>
-                <td>Content</td>
-                <td>Category</td>
-                <td>Views</td>
+                <td>Filial</td>
+                <td>Director</td>
                 <td></td>
                 <td></td>
             </tr>
         </thead>
         <tbody>
-            {% for singlenews in news %}
+            {% for filial in filials %}
                 <tr>
-                    <td>{{singlenews.id}}</td>
-                    <td>{{singlenews.title|truncatechars:30}}</td>
-                    <td>{{singlenews.content|truncatechars:30}}</td>
-                    <td>{{singlenews.category}}</td>
-                    <td>{{singlenews.views}}</td>
+                    <td>{{filial.id}}</td>
+                    <td>{{filial.title}}</td>
+                    <td>{{filial.director.fullname}}</td>
                     <td>
-                        <a href="{% url 'news-update' pk=singlenews.id %}">Update</a>
+                        <a href="{% url 'news-update' pk=filial.id %}">Update</a>
                     </td>
                     <td>
-                        <a href="{% url 'news-delete' pk=singlenews.id %}">Delete</a>
+                        <a href="{% url 'news-delete' pk=filial.id %}">Delete</a>
                     </td>
                 </tr>
             {% endfor %}

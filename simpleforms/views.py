@@ -1,61 +1,87 @@
+from django.db.models import fields
+from django.db.models.fields.files import FileField
 from django.shortcuts import redirect, render
 from django.urls import reverse
+from django.db import transaction
 
-from .models import Category, News
+from .models import Category, Director, Filial, News
 from .forms import NewsForm
+from .utils import parse_date_time
 
 
 def index(request):
-    news = News.objects.all()
+    filials = Filial.objects.all()
     context = {
-        "news": news
+        "filials": filials
     }
     return render(request, "simpleforms/list.html", context)
 
 
 def create(request):
-    form = NewsForm()
-
     if request.method == "POST":
-        form = NewsForm(request.POST, request.FILES)
-        if form.is_valid():
-            news = form.save(commit=False)
-            news.save()
-            return redirect(reverse("news-list"))
+        title = request.POST.get("title", None)
+        date = request.POST.get("date", None)
+        time = request.POST.get("time", None)
+        director = request.POST.get("director", None)
+        experience = request.POST.get("experience", None)
 
+        with transaction.atomic():
+            f = Filial(
+                title=title,
+                established_at=parse_date_time(date, time)
+            )
+            f.save()
 
-    context = {
-        "form": form
-    }
+            d = Director(
+                fullname=director,
+                experience=experience,
+                filial=f
+            )
+            d.save()
+
+        return redirect(reverse("news-list"))
+
+    context = {}
     return render(request, "simpleforms/create.html", context)
 
 
 def update(request, pk):
-    news = News.objects.filter(id=pk)
-    if not news.exists():
+    try:
+        filial = Filial.objects.get(id=pk)
+        date = filial.established_at.strftime("%Y-%m-%d")
+        time = filial.established_at.strftime("%H:%M")
+    except:
         return redirect(reverse("news-list"))
-    else:
-        news = news.first()
-    
-    form = NewsForm(instance=news)
 
     if request.method == "POST":
-        news = NewsForm(request.POST, request.FILES, instance=news)
-        if news.is_valid():
-            news.save()
-            return redirect(reverse("news-list"))
+        title = request.POST.get("title", None)
+        date = request.POST.get("date", None)
+        time = request.POST.get("time", None)
+        director = request.POST.get("director", None)
+        experience = request.POST.get("experience", None)
+
+        with transaction.atomic():
+            filial.title = title
+            filial.established_at=parse_date_time(date, time)
+            filial.director.fullname = director
+            filial.director.experience = experience
+            filial.save()
+            filial.director.save()
+
+        return redirect(reverse("news-list"))
 
     context = {
-        "form": form
+        "filial": filial,
+        "date": date,
+        "time": time
     }
     return render(request, "simpleforms/update.html", context)
 
 
 def delete(request, pk):
     try:
-        news = News.objects.get(id=pk)
-        news.delete()
-    except News.DoesNotExist:
+        Filial.objects.get(id=pk).delete()
+    except:
         pass
 
     return redirect(reverse("news-list"))
@@ -68,4 +94,3 @@ def category_example_form(request):
         "form": form
     }
     return render(request, "simpleforms/example.html", context)
-
