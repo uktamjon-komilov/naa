@@ -27,18 +27,23 @@
         </thead>
         <tbody>
             {% for filial in filials %}
-                <tr>
-                    <td>{{filial.id}}</td>
-                    <td>{{filial.title}}</td>
-                    <td>{{filial.director.fullname}}</td>
-                    <td>
-                        <a href="{% url 'news-update' pk=filial.id %}">Update</a>
-                    </td>
-                    <td>
-                        <a href="{% url 'news-delete' pk=filial.id %}">Delete</a>
-                    </td>
-                </tr>
+                {% if forloop.counter < 4 %}
+                    <tr>
+                        <td>{{forloop.counter}}</td>
+                        <td>{{filial.title}}</td>
+                        <td>{{filial.director.fullname}}</td>
+                        <td>
+                            <a href="{% url 'news-update' pk=filial.id %}">Update</a>
+                        </td>
+                        <td>
+                            <a href="{% url 'news-delete' pk=filial.id %}">Delete</a>
+                        </td>
+                    </tr>
+                {% endif %}
             {% endfor %}
+            <tr>
+                <td>....</td>
+            </tr>
         </tbody>
     </table>
 </body>

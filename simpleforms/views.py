@@ -4,8 +4,8 @@ from django.shortcuts import redirect, render
 from django.urls import reverse
 from django.db import transaction
 
-from .models import Category, Director, Filial, News
-from .forms import NewsForm
+from .models import Director, Filial, News
+from .forms import NewsForm, DirectorForm, FilialForm
 from .utils import parse_date_time
 
 
@@ -18,62 +18,59 @@ def index(request):
 
 
 def create(request):
+    director_form = DirectorForm()
+    filial_form = FilialForm()
+
     if request.method == "POST":
-        title = request.POST.get("title", None)
-        date = request.POST.get("date", None)
-        time = request.POST.get("time", None)
-        director = request.POST.get("director", None)
-        experience = request.POST.get("experience", None)
+        director_form = DirectorForm(request.POST)
+        filial_form = FilialForm(request.POST)
 
-        with transaction.atomic():
-            f = Filial(
-                title=title,
-                established_at=parse_date_time(date, time)
-            )
-            f.save()
+        if director_form.is_valid() and filial_form.is_valid():
+            filial = filial_form.save(commit=False)
+            director = director_form.save(commit=False)
 
-            d = Director(
-                fullname=director,
-                experience=experience,
-                filial=f
-            )
-            d.save()
+            director.filial = filial
 
-        return redirect(reverse("news-list"))
+            filial.save()
+            director.save()
 
-    context = {}
+            return redirect(reverse("news-list"))
+
+    context = {
+        "filial_form": filial_form,
+        "director_form": director_form
+    }
     return render(request, "simpleforms/create.html", context)
 
 
 def update(request, pk):
     try:
         filial = Filial.objects.get(id=pk)
-        date = filial.established_at.strftime("%Y-%m-%d")
-        time = filial.established_at.strftime("%H:%M")
     except:
         return redirect(reverse("news-list"))
 
+    director_form = DirectorForm(instance=filial.director)
+    filial_form = FilialForm(instance=filial)
+
     if request.method == "POST":
-        title = request.POST.get("title", None)
-        date = request.POST.get("date", None)
-        time = request.POST.get("time", None)
-        director = request.POST.get("director", None)
-        experience = request.POST.get("experience", None)
+        director_form = DirectorForm(request.POST, instance=filial.director)
+        filial_form = FilialForm(request.POST, instance=filial)
 
-        with transaction.atomic():
-            filial.title = title
-            filial.established_at=parse_date_time(date, time)
-            filial.director.fullname = director
-            filial.director.experience = experience
+        if director_form.is_valid() and filial_form.is_valid():
+            filial = filial_form.save(commit=False)
+            director = director_form.save(commit=False)
+
+            director.filial = filial
+
             filial.save()
-            filial.director.save()
+            director.save()
 
-        return redirect(reverse("news-list"))
+            return redirect(reverse("news-list"))
+
 
     context = {
-        "filial": filial,
-        "date": date,
-        "time": time
+        "director_form": director_form,
+        "filial_form": filial_form
     }
     return render(request, "simpleforms/update.html", context)
 

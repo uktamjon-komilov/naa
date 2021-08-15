@@ -1,6 +1,6 @@
 from django import forms
 
-from .models import Category, News
+from .models import Filial, News, Director
 
 
 class NewsForm(forms.ModelForm):
@@ -16,3 +16,15 @@ class NewsForm(forms.ModelForm):
             self.fields[field].widget.attrs["class"] = "form-control"
         
     
+class DirectorForm(forms.ModelForm):
+    class Meta:
+        model = Director
+        fields = ["fullname", "experience"]
+
+
+class FilialForm(forms.ModelForm):
+    established_at = forms.DateTimeField(input_formats=["%d.%m.%Y %H:%M"])
+
+    class Meta:
+        model = Filial
+        fields = ["title", "established_at"]
