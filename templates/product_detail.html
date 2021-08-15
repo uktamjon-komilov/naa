@@ -17,11 +17,11 @@
     </div>
 </div> <!-- slider-product.// -->
 <div class="thumbs-wrap">
-    <a href="#" class="item-thumb">
+    <a href="" class="item-thumb">
         <img src="{% get_media_prefix %}{{product.image}}" class="extra-images">
     </a>
     {% for product_image in product.product_images.all %}
-        <a href="#" class="item-thumb">
+        <a href="" class="item-thumb">
             <img src="{% get_media_prefix %}{{product_image.image}}" class="extra-images">
         </a>
     {% endfor %}
@@ -70,7 +70,7 @@
 <dd class="col-sm-9">
     <select name="color">
         <option value="-1" selected>Choose color</option>
-        {% for color in product.product_colors.all %}
+        {% for color in product.color.all %}
             <option value="{{color.id}}">{{color.name}}</option>
         {% endfor %}
     </select>
@@ -80,7 +80,7 @@
 <dd class="col-sm-9">
     <select name="size">
         <option value="-1" selected>Choose size</option>
-        {% for size in product.product_size.all %}
+        {% for size in product.size.all %}
             <option value="{{size.id}}">{{size.name}}</option>
         {% endfor %}
     </select>

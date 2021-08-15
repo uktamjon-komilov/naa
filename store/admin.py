@@ -11,18 +11,6 @@ class ProductImageStackedAdmin(admin.StackedInline):
     extra = 1
 
 
-class ProductColorStackedAdmin(admin.StackedInline):
-    model = ProductColor
-    fields = ["name"]
-    extra = 1
-
-
-class ProductSizeStackedAdmin(admin.StackedInline):
-    model = ProductSize
-    fields = ["name"]
-    extra = 1
-
-
 
 class ProductAdmin(admin.ModelAdmin):
     list_display = ["title", "price", "rating", "sub_category", "is_active"]
@@ -30,7 +18,7 @@ class ProductAdmin(admin.ModelAdmin):
     search_fields = ["title", "description"]
     prepopulated_fields = {"slug": ("title",)}
 
-    inlines = [ProductImageStackedAdmin, ProductColorStackedAdmin, ProductSizeStackedAdmin]
+    inlines = [ProductImageStackedAdmin]
 
 
 
@@ -52,5 +40,7 @@ class SubCategoryAdmin(admin.ModelAdmin):
 admin.site.register(Category, CategoryAdmin)
 admin.site.register(SubCategory, SubCategoryAdmin)
 admin.site.register(Product, ProductAdmin)
+admin.site.register(ProductColor)
+admin.site.register(ProductSize)
 
 # admin.site.register(ProductImageAdmin)

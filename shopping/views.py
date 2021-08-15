@@ -10,28 +10,23 @@ def add_cartitem(request, cartitem_id):
     try:
         cartitem = CartItem.objects.get(id=cartitem_id)
         cartitem.quantity += 1
+        cartitem.save()
     except CartItem.DoesNotExist:
         pass
-
-    cartitem.save()
 
     return redirect(reverse("cart"))
 
 
-def subtract_cartitem(request, product_id):
+def subtract_cartitem(request, cartitem_id):
     try:
-        product = Product.objects.get(id=product_id)
-    except Product.DoesNotExist:
-        return redirect(reverse("home-page"))
+        cartitem = CartItem.objects.get(id=cartitem_id)
 
-    cart = get_cart(request)
-    try:
-        cartitem = CartItem.objects.get(cart=cart, product=product)
-        if cartitem.quantity > 1:
+        if cartitem.quantity == 1:
+            cartitem.delete()
+        else:
             cartitem.quantity -= 1
             cartitem.save()
-        else:
-            cartitem.delete()
+
     except CartItem.DoesNotExist:
         pass
 

@@ -30,6 +30,19 @@ class SubCategory(models.Model):
         return self.name
 
 
+class ProductColor(models.Model):
+    name = models.CharField(max_length=255)
+
+    def __str__(self):
+        return self.name
+
+
+class ProductSize(models.Model):
+    name = models.CharField(max_length=255)
+
+    def __str__(self):
+        return self.name
+
 
 class Product(models.Model):
     class Meta:
@@ -43,6 +56,8 @@ class Product(models.Model):
     rating = models.FloatField()
     image = models.ImageField(upload_to="images/")
     sub_category = models.ForeignKey(SubCategory, on_delete=models.CASCADE)
+    color = models.ManyToManyField(ProductColor)
+    size = models.ManyToManyField(ProductSize)
     is_active = models.BooleanField(default=True)
 
     created_at = models.DateTimeField(auto_now_add=True, null=True)
@@ -59,17 +74,6 @@ class Product(models.Model):
     def is_new_product(self):
         time_delta = datetime.now(timezone.utc) - self.created_at
         return time_delta.seconds < settings.NEW_PRODUCT_SECONDS
-
-
-
-class ProductColor(models.Model):
-    name = models.CharField(max_length=255)
-    product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name="product_colors", null=True)
-
-
-class ProductSize(models.Model):
-    name = models.CharField(max_length=255)
-    product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name="product_size", null=True)
 
 
 class ProductImage(models.Model):
