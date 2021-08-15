@@ -1,5 +1,6 @@
 from .models import Cart, CartItem
 
+
 def get_cart(request):
     session_id = request.session.session_key
     if not session_id:
@@ -24,3 +25,9 @@ def get_cartitems_count(request):
             amount += cartitem.quantity
     
     return amount
+
+
+def delete_cart(cart):
+    cartitems = CartItem.objects.filter(cart=cart)
+    if not cartitems.exists():
+        cart.delete()

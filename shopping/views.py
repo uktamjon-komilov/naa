@@ -3,7 +3,7 @@ from django.urls import reverse
 
 from store.models import Product
 from .models import Cart, CartItem
-from .utils import get_cart
+from .utils import delete_cart, get_cart
 
 
 def add_cartitem(request, cartitem_id):
@@ -23,6 +23,9 @@ def subtract_cartitem(request, cartitem_id):
 
         if cartitem.quantity == 1:
             cartitem.delete()
+
+            cart = get_cart(request)
+            delete_cart(cart)
         else:
             cartitem.quantity -= 1
             cartitem.save()
@@ -37,6 +40,10 @@ def remove_cartitem(request, cartitem_id):
     try:
         cartitem = CartItem.objects.get(id=cartitem_id)
         cartitem.delete()
+
+        cart = get_cart(request)
+        delete_cart(cart)
+
     except CartItem.DoesNotExist:
         pass
 
