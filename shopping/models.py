@@ -31,10 +31,10 @@ def add_coupon(self):
         )
         coupon.save()
         for category in self.category.all():
+            print(category)
             coupon.category.add(category)
         coupon.save()
     else:
-        print("Yangi kod generatsiya qilyapti")
         add_coupon(self)
 
 
@@ -62,7 +62,10 @@ class CartItem(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     def total_price(self):
-        return self.quantity * self.product.price
+        if self.reduced_price != 0.0:
+            return self.reduced_price * self.quantity
+        else:
+            return self.product.price * self.quantity
     
 
     def get_color_name(self):
@@ -78,6 +81,12 @@ class CartItem(models.Model):
             return size.name
         else:
             return None
+    
+    def get_price(self):
+        if self.reduced_price != 0.0:
+            return self.reduced_price
+        else:
+            return self.product.price
 
 
 class Coupon(models.Model):
@@ -97,9 +106,24 @@ class CouponGroup(models.Model):
     expires_in = models.DateTimeField()
     category = models.ManyToManyField(SubCategory)
 
+        
     def save(self, *args, **kwargs):
         super(CouponGroup, self).save(*args, **kwargs)
 
         for _ in range(self.count):
-            add_coupon(self)
+            code = generate_coupon_code()
+            coupons = Coupon.objects.filter(code=code)
 
+            if not coupons.exists():
+                coupon = Coupon(
+                    code=code,
+                    stock=self.stock,
+                    expires_in=self.expires_in
+                )
+                coupon.save()
+                coupon_group = CouponGroup.objects.get(count=self.count, stock=self.stock, expires_in=self.expires_in)
+                print(coupon_group.category.all())
+                coupon.category.add(*coupon_group.category.all())
+                coupon.save()
+            else:
+                add_coupon(self)

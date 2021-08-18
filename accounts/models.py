@@ -1,6 +1,5 @@
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, UserManager
-from django.db.models.fields import DateTimeField
 
 
 class UserManager(UserManager):
@@ -25,8 +24,8 @@ class User(AbstractBaseUser):
     last_name = models.CharField(max_length=255)
 
     GENDERS = [
-        ("m", "male"),
-        ("f", "female")
+        ("m", "Male"),
+        ("f", "Female")
     ]
     gender = models.CharField(choices=GENDERS, max_length=10, default="m")
 

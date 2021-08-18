@@ -31,3 +31,8 @@ def delete_cart(cart):
     cartitems = CartItem.objects.filter(cart=cart)
     if not cartitems.exists():
         cart.delete()
+
+
+def get_current_utc():
+    from datetime import datetime, timezone
+    return datetime.now(timezone.utc)
